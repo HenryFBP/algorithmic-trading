@@ -99,3 +99,7 @@ class EMAMomentumUniverse(QCAlgorithm):
                 self.Liquidate()
                 self.Debug('Exiting Short')
                 self.is_invested = None
+            # if there is no exit signal, rebalance if it is the case
+            # elif self.rebalance_daily:
+            #     targets = self.long_targets if self.is_invested == 'long' else self.short_targets
+            #     self.SetHoldings(targets)
