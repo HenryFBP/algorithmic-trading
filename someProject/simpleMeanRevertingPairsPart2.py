@@ -11,7 +11,11 @@ class EMAMomentumUniverse(QCAlgorithm):
         self.SetEndDate(2021, 6, 9)
         self.SetCash(100000)
 
-        lookback = int(self.GetParameter("lookback")) # it was 220
+        # lookback = int(self.GetParameter("lookback")) # it was 220
+        lookback = 220
+
+        # backtest says this is better:
+        lookback = 250
 
         # Add the assets to be fed into the algorithm and save the symbol objects (to be referred later)
         self.asset1 = self.AddEquity('EWA', Resolution.Daily).Symbol
