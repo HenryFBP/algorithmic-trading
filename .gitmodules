@@ -1,3 +1,6 @@
 [submodule "Lean"]
 	path = quantconnect/Lean
 	url = https://github.com/QuantConnect/Lean/
+[submodule "scratch/Algorithmic-Trading-Backtesting-python-example"]
+	path = scratch/scratch/Algorithmic-Trading-Backtesting-python-example
+	url = https://github.com/karthikramx/Algorithmic-Trading-Backtesting-python-example
