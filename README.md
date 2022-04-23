@@ -2,4 +2,4 @@
 
 bcuz i use submodules :P
 
-    git clone git@github.com:HenryFBP/quantconnect.git --recurse-submodules
+    git clone git@github.com:HenryFBP/algorithmic-trading.git --recurse-submodules
