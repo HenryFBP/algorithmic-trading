@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "scratch"
+version = "0.1.0"
+description = ""
+authors = ["Henry Post <HenryFBP@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.2"
+numpy = "^1.22.3"
+matplotlib = "^3.5.1"
+yfinance = "^0.1.70"
+pyfolio = "^0.9.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
