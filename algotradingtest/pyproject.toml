@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "scratch"
+name = "algotradingtest"
 version = "0.1.0"
 description = ""
 authors = ["Henry Post <HenryFBP@gmail.com>"]
