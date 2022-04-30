@@ -77,5 +77,28 @@ def generate_stock_dfs_graphs(stock_dfs: List[pd.DataFrame], figsize=rectFig, fo
     plt.xlabel("Date")
     plt.title("Stock prices of {}".format(','.join(stock_names)))
     plt.savefig(os.path.join(folder, 'price.generated.png'))
+    plt.close()
+
+    # make a volume graph
+    for stock_df in stock_dfs:
+        # stock_df.set_index('Date', inplace=True)
+        stock_df['Volume'].plot(x='Date', y='Volume', label=stock_df['Stock Ticker'][0], figsize=rectFig)
+    plt.legend()
+    plt.ylabel("Volume Traded in Stock Units")
+    plt.xlabel("Date")
+    plt.title("Volume Traded of {}".format(','.join(stock_names)))
+    plt.savefig(os.path.join(folder, 'volume.generated.png'))
+    plt.close()
+
+    # make a "total traded" graph
+    for stock_df in stock_dfs:
+        stock_df['Total Traded'] = stock_df['Open'] * stock_df['Volume']
+        stock_df['Total Traded'].plot(x='Date', y='Total Traded', label=stock_df['Stock Ticker'][0], figsize=rectFig)
+    plt.legend()
+    plt.ylabel("Total $USD Traded in Stock Units")
+    plt.xlabel("Date")
+    plt.title("$USD Traded of {}".format(','.join(stock_names)))
+    plt.savefig(os.path.join(folder, 'total_traded_usd.generated.png'))
+    plt.close()
 
     return folder
