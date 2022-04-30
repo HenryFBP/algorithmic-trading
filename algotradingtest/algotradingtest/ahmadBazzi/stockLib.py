@@ -70,7 +70,8 @@ def generate_stock_dfs_graphs(stock_dfs: List[pd.DataFrame], figsize=rectFig, fo
 
     # make a simple price graph
     for stock_df in stock_dfs:
-        stock_df['Open'].plot(label=stock_df['Stock Ticker'][0], figsize=rectFig)
+        stock_df.set_index('Date', inplace=True)
+        stock_df['Open'].plot(x='Date', y='Open', label=stock_df['Stock Ticker'][0], figsize=rectFig)
     plt.legend()
     plt.ylabel("Stock Price in USD")
     plt.xlabel("Date")

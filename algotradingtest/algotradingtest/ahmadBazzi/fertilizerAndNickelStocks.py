@@ -7,8 +7,8 @@ import pandas as pd
 
 from stockLib import *
 
-start = datetime.datetime(2012, 1, 1)
-end = datetime.datetime(2022, 1, 1)
+start = datetime.datetime(2018, 1, 1)
+end = datetime.datetime(2022, 4, 1)
 
 car_stock_list = 'TSLA GM F'.split(' ')
 nickel_stock_list = 'SBSW MTRN NIC GMKN CNC POS NICK VALE 2362 GLEN BHP RRR' \
