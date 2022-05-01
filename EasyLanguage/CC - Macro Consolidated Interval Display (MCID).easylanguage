@@ -1,0 +1,231 @@
+// from https://www.tradingview.com/script/Z5iBroFO-CC-Macro-Consolidated-Interval-Display-MCID/
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © carusocomputing
+
+//@version=4
+study("CC - Macro Consolidated Interval Display (MCID)", max_bars_back=2500, overlay=true)
+
+truncate(number, decimals) =>
+    factor = pow(10, decimals)
+    int(number * factor) / factor
+
+f_multipleOfRes(_res, _mult) =>
+    // _res:  current resolution in minutes, in the fractional format supplied by f_resInMinutes() companion function.
+    // _mult: Multiple of current TF to be calculated.
+    // Convert current float TF in minutes to target string TF in "timeframe.period" format.
+    _targetResInMin = _res * max(_mult, 0.2)
+    // Find best string to express the resolution.
+    _targetResInMin   <= 0.083 ? "5S"  :
+      _targetResInMin <= 0.251 ? "15S" :
+      _targetResInMin <= 0.501 ? "30S" :
+      _targetResInMin <= 1440  ? tostring(round(_targetResInMin)) :
+      _targetResInMin <= 43800 ? tostring(round(min(_targetResInMin / 1440, 365))) + "D" :
+      tostring(round(min(_targetResInMin / 43800, 12))) + "M"
+
+// ————— Converts current "timeframe.multiplier" plus the TF into minutes of type float.
+f_resInMinutes() =>
+    _resInMinutes = timeframe.multiplier * (
+      timeframe.isseconds   ? 1. / 60.  :
+      timeframe.isminutes   ? 1.        :
+      timeframe.isdaily     ? 1440.     :
+      timeframe.isweekly    ? 10080.    :
+      timeframe.ismonthly   ? 43800.    : na)
+
+// Get multiple of current resolution.
+resInMinutes = f_resInMinutes()
+
+resolveInMinutes(ticker,x,y)=>
+    security(symbol=ticker, resolution=f_multipleOfRes(resInMinutes, y), expression=x, gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_on)
+
+resolveByString(ticker,x,str)=>
+    security(symbol=ticker, resolution=str, expression=x, gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_on)
+
+tp = (close + high + low) / 3.0
+
+showIWMData = input(true, title="Show IWM Data")
+showTLTData = input(true, title="Show TLT Data")
+showGLDData = input(true, title="Show GLD Data")
+showQQQData = input(true, title="Show QQQ Data")
+showSPYData = input(true, title="Show SPY Data")
+showVIXData = input(true, title="Show VIX Data")
+precisionInput = input(2.0, title="Precision")
+srcInput = input(close, "Source", input.source)
+
+constant1dInterval = '1D'
+
+var float[] sma50Array = array.new_float(size=6)
+var float[] sma200Array = array.new_float(size=6)
+var float[] vwapArray = array.new_float(size=6)
+var float[] atrArray = array.new_float(size=6)
+var float[] rsi7Array = array.new_float(size=6)
+var float[] rsi14Array = array.new_float(size=6)
+
+array.unshift(id=sma50Array, value=resolveByString("VIX",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("VIX",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("VIX",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("VIX",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("VIX",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("VIX",atr(14),constant1dInterval))
+
+array.unshift(id=sma50Array, value=resolveByString("SPY",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("SPY",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("SPY",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("SPY",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("SPY",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("SPY",atr(14),constant1dInterval))
+
+array.unshift(id=sma50Array, value=resolveByString("QQQ",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("QQQ",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("QQQ",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("QQQ",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("QQQ",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("QQQ",atr(14),constant1dInterval))
+
+array.unshift(id=sma50Array, value=resolveByString("GLD",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("GLD",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("GLD",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("GLD",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("GLD",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("GLD",atr(14),constant1dInterval))
+
+array.unshift(id=sma50Array, value=resolveByString("TLT",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("TLT",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("TLT",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("TLT",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("TLT",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("TLT",atr(14),constant1dInterval))
+
+array.unshift(id=sma50Array, value=resolveByString("IWM",sma(srcInput,50),constant1dInterval))
+array.unshift(id=sma200Array, value=resolveByString("IWM",sma(srcInput,200),constant1dInterval))
+array.unshift(id=vwapArray, value=resolveByString("IWM",vwap(srcInput),constant1dInterval))
+array.unshift(id=rsi7Array, value=resolveByString("IWM",rsi(srcInput,7),constant1dInterval))
+array.unshift(id=rsi14Array, value=resolveByString("IWM",rsi(srcInput,14),constant1dInterval))
+array.unshift(id=atrArray, value=resolveByString("IWM",atr(14),constant1dInterval))
+
+float localResolution = (highest(tp, 2500)-lowest(tp, 2500))
+
+intervalIWMLabel = label.new(time, tp + (high/2.0) - tp/100.0,
+  "IWM Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_upper_left,
+  xloc=xloc.bar_time,
+  size=size.small)
+
+if (showIWMData)
+    label.delete(intervalIWMLabel[1])
+else
+    label.delete(intervalIWMLabel[0])
+
+intervalTLTLabel = label.new(time, tp + (high/2.0) + tp/100.0,
+  "TLT Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_lower_left,
+  xloc=xloc.bar_time,
+  size=size.small) //if you use lower left it crosses candles
+
+if (showTLTData)
+    label.delete(intervalTLTLabel[1])
+else
+    label.delete(intervalTLTLabel[0])
+
+intervalGLDLabel = label.new(time[33], tp + (high/2.0) - tp/100.0,
+  "GLD Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_up,
+  xloc=xloc.bar_time,
+  size=size.small)
+
+if (showGLDData)
+    label.delete(intervalGLDLabel[1])
+else
+    label.delete(intervalGLDLabel[0])
+
+intervalQQQLabel = label.new(time[33], tp + (high/2.0) + tp/100.0,
+  "QQQ Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_down,
+  xloc=xloc.bar_time,
+  size=size.small)
+
+if (showQQQData)
+    label.delete(intervalQQQLabel[1])
+else
+    label.delete(intervalQQQLabel[0])
+
+intervalSPYLabel = label.new(time[66], tp + (high/2.0) - tp/100.0,
+  "SPY Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_upper_right,
+  xloc=xloc.bar_time,
+  size=size.small)
+
+if (showSPYData)
+    label.delete(intervalSPYLabel[1])
+else
+    label.delete(intervalSPYLabel[0])
+
+intervalVIXLabel = label.new(time[66], tp + (high/2.0) + tp/100.0,
+  "VIX Data:\n"
+  + "VWAP=" + tostring(truncate(array.shift(id=vwapArray),precisionInput))
+  + ", ATR14=" + tostring(truncate(array.shift(id=atrArray),precisionInput))
+  + ",\n"
+  + "RSI7=" + tostring(truncate(array.shift(id=rsi7Array),precisionInput))
+  + ", RSI14=" + tostring(truncate(array.shift(id=rsi14Array),precisionInput))
+  + ",\n"
+  + "SMA50=" + tostring(truncate(array.shift(id=sma50Array),precisionInput))
+  + ", SMA200=" + tostring(truncate(array.shift(id=sma200Array),precisionInput)),
+  color=color.white,
+  textcolor=color.black,
+  style=label.style_label_lower_right,
+  xloc=xloc.bar_time,
+  size=size.small)
+
+if (showVIXData)
+    label.delete(intervalVIXLabel[1])
+else
+    label.delete(intervalVIXLabel[0])
