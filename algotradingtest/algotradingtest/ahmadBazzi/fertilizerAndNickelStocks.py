@@ -7,7 +7,7 @@ import pandas as pd
 
 from stockLib import *
 
-start = datetime.datetime(2018, 1, 1)
+start = datetime.datetime(2015, 1, 1)
 end = datetime.datetime(2022, 4, 1)
 
 car_stock_list = 'TSLA GM F'.split(' ')
