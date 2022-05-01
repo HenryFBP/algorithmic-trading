@@ -8,6 +8,11 @@
 - https://www.reddit.com/r/algotrading/comments/u6vr31/how_the_medallion_fund_makes_75_annually/
 - https://www.investopedia.com/articles/personal-finance/090916/top-5-books-learn-technical-analysis.asp
 
+## websites
+
+- https://vlab.stern.nyu.edu/
+- https://www.reddit.com/r/algotrading/
+
 ## papers
 
 ## tools
