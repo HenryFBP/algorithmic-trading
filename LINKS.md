@@ -12,6 +12,13 @@
 
 - https://vlab.stern.nyu.edu/
 - https://www.reddit.com/r/algotrading/
+  - https://www.reddit.com/r/algotrading/comments/fqc3vo/are_you_new_here_want_to_know_where_to_start/
+  - https://www.reddit.com/r/algotrading/wiki/index#wiki_how_to_get_historical_data_for_free
+  - https://www.reddit.com/r/algotrading/wiki/index#wiki_strategy
+
+## socials
+
+- https://twitter.com/macro_srsv
 
 ## papers
 
