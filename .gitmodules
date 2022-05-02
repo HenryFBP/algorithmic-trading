@@ -1,3 +1,6 @@
 [submodule "Lean"]
 	path = quantconnect/Lean
 	url = https://github.com/QuantConnect/Lean/
+[submodule "work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading"]
+	path = work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading
+	url = https://github.com/HenryFBP/EPChan-QuantitativeTrading
