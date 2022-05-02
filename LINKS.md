@@ -16,6 +16,10 @@
   - https://www.reddit.com/r/algotrading/wiki/index#wiki_how_to_get_historical_data_for_free
   - https://www.reddit.com/r/algotrading/wiki/index#wiki_strategy
 
+## videos
+
+- https://youtu.be/CrsrTxqiXNY
+
 ## socials
 
 - https://twitter.com/macro_srsv
