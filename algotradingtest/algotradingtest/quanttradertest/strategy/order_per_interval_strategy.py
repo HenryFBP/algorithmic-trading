@@ -13,7 +13,9 @@ class OrderPerIntervalStrategy(StrategyBase):
     """
     buy on the first tick then hold to the end
     """
+
     def __init__(self):
+        _logger.info("init " + self.__class__.__name__)
         super(OrderPerIntervalStrategy, self).__init__()
         self.ticks = 0
         self.tick_trigger_threshold = 2000
@@ -21,7 +23,10 @@ class OrderPerIntervalStrategy(StrategyBase):
         _logger.info('OrderPerIntervalStrategy initiated')
 
     def on_tick(self, k):
-        super().on_tick(k)     # extra mtm calc
+        super().on_tick(k)  # extra mtm calc
+        _logger.info(
+            ("{}/{}; on_tick() from " + self.__class__.__name__).format(
+                self.ticks, self.tick_trigger_threshold))
 
         if k.tick_type != TickType.TRADE:
             print(k, f'{self.ticks}/{self.tick_trigger_threshold}')
