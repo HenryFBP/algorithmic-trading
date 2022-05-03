@@ -1,9 +1,9 @@
-[submodule "Lean"]
-	path = src/quantconnect/Lean
-	url = https://github.com/QuantConnect/Lean/
 [submodule "work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading"]
 	path = work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading
 	url = https://github.com/HenryFBP/EPChan-QuantitativeTrading
 [submodule "repos/letianzj-QuantResearch"]
-	path = repos/letianzj-QuantResearch/
+	path = repos/letianzj-QuantResearch
 	url = https://github.com/letianzj/QuantResearch
+[submodule "src/quantconnect/Lean"]
+	path = src/quantconnect/Lean
+	url = https://github.com/QuantConnect/Lean
