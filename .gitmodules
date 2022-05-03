@@ -4,3 +4,6 @@
 [submodule "work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading"]
 	path = work/quant-trading-ernest-p-chan/EPChan-QuantitativeTrading
 	url = https://github.com/HenryFBP/EPChan-QuantitativeTrading
+[submodule "repos/QuantResearch"]
+	path = repos/QuantResearch
+	url = https://github.com/letianzj/QuantResearch
