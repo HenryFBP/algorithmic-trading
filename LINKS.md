@@ -22,6 +22,7 @@
 ## videos
 
 - https://youtu.be/CrsrTxqiXNY
+- https://youtu.be/lqg2BdDDrWc
 
 ## socials
 
