@@ -8,3 +8,8 @@ bcuz i use submodules :P
 
     pip install poetry
     poetry install
+
+## adding submodules
+
+    cd myfolder/etc/etc2
+    git submodule add --name <name> <url> <path> 
