@@ -2,6 +2,8 @@
 
 - https://towardsdatascience.com/find-highly-correlated-stocks-with-python-77eba4fd061b?gi=c7db25b7f96b
 - https://towardsdatascience.com/the-complete-list-of-books-for-quantitative-algorithmic-machine-learning-trading-621b274fec5f
+- https://letianzj.github.io/
+  - https://github.com/letianzj/QuantResearch
 
 ## articles
 
