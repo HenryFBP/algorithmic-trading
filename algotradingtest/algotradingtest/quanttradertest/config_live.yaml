@@ -35,13 +35,13 @@ strategy:
   #   symbols:
   #   - MESZ0 FUT GLOBEX
   #---------- Strategy and params control -----------#
-  # MovingAverageCrossStrategy:
-  #   active: false
-  #   capital: 10000
-  #   params:
-  #     G: 20
-  #   symbols:
-  #   - CLZ0 FUT NYMEX
+  MovingAverageCrossStrategy:
+    active: false
+    capital: 10000
+    params:
+      G: 20
+    symbols:
+    - CLZ0 FUT NYMEX
   #---------- Strategy and params control -----------#
   # ActiveBuySellStrengthStrategy:
   #   active: false
@@ -61,6 +61,7 @@ strategy:
     single_trade_limit: 3
     symbols:
     - ESM1 FUT GLOBEX
+#    - ESU0 FUT GLOBEX
     total_active_limit: 2
     total_cancel_limit: 5
     total_loss_limit: 5000
