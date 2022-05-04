@@ -53,19 +53,22 @@ strategy:
   #---------- Strategy, params control, and local risk control -----------#
   OrderPerIntervalStrategy:
     active: false
-    capital: 50000
-    order_start_time: '10:00:00'
+    capital: 5000
+    order_start_time: '09:00:00'
     order_end_time: '16:15:00'
     params:
-      tick_trigger_threshold: 6000
+#      tick_trigger_threshold: 6000
+      tick_trigger_threshold: 100
     single_trade_limit: 3
     symbols:
 #    - ESM1 FUT GLOBEX
-    - SPY STK SMART #suggested by https://github.com/letianzj/quanttrader/issues/5
+#    - SPY STK SMART #suggested by https://github.com/letianzj/quanttrader/issues/5
+    - AAPL STK SMART
     total_active_limit: 2
     total_cancel_limit: 5
     total_loss_limit: 5000
-    total_trade_limit: 15
+#    total_trade_limit: 15
+    total_trade_limit: 999999999999999999999
 #---------- global risk control -----------#
 total_active_limit: 3
 total_cancel_limit: 10
