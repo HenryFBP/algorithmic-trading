@@ -53,3 +53,4 @@
 - https://github.com/brucelinker/EasyLanguage
 - https://github.com/fneudert/easylanguage
 - https://github.com/ranaroussi/qtpylib
+- https://github.com/amoi9/pythonProject
