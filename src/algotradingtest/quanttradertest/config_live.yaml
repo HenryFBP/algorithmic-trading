@@ -73,4 +73,5 @@ strategy:
 total_active_limit: 3
 total_cancel_limit: 10
 total_loss_limit: 10000
-total_trade_limit: 20
+#total_trade_limit: 20
+total_trade_limit: 999999999999999999999
