@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><PreferredValues /><Name>meanRevertingPairsCSHARP</Name><Description>Enter a description for the Strategy here.</Description><Author>henryfbp</Author><CreationDate>2022-05-05T15:59:13.1369589+00:00</CreationDate><StrategyType>Code</StrategyType><StrategyData>using WealthLab.Backtest;
+using System;
+using WealthLab.Core;
+using WealthLab.Indicators;
+using System.Collections.Generic;
+
+
+namespace WealthScript1 
+{
+    public class MyStrategy : UserStrategyBase
+    {
+	    public MyStrategy() : base()
+        {
+			AddParameter("ZSCBuy", ParameterType.Double, 0, -5, 5, 1);
+			AddParameter("ZSCSell", ParameterType.Double, -4, -5, 5, 1);
+
+        }
+
+        public override void Initialize(BarHistory bars)
+        {
+			indicator = new ZScore(bars.Close,10);
+			PlotIndicator(indicator,new WLColor(0,0,0));
+			indicator.MassageColors = true;
+			indicator2 = new ZScore(bars.Close,10);
+
+			StartIndex = 10;
+        }
+
+        public override void Execute(BarHistory bars, int idx)
+        {
+			int index = idx;
+			Position foundPosition0 = FindOpenPosition(0);
+			bool condition0;
+			if (foundPosition0 == null)
+			{
+				condition0 = false;
+				{
+					if (indicator.CrossesUnder(Parameters[0].AsDouble, index))
+					{
+						condition0 = true;
+					}
+				}
+				if (condition0)
+				{
+					_transaction = PlaceTrade(bars, TransactionType.Buy, OrderType.Market, 0, 0, "Buy At Market (1)");
+				}
+			}
+			else
+			{
+				condition0 = false;
+				{
+					if (indicator2.CrossesOver(Parameters[1].AsDouble, index))
+					{
+						condition0 = true;
+					}
+				}
+				if (condition0)
+				{
+					ClosePosition(foundPosition0, OrderType.Market, 0, "Sell At Market (1)");
+				}
+			}
+
+        }
+
+		private IndicatorBase indicator;
+		private IndicatorBase indicator2;
+
+		private Transaction _transaction;
+    }
+}</StrategyData><LibraryName /><FolderName>My Strategies</FolderName><DataSetName>S&amp;P 100</DataSetName><SingleSymbolMode>false</SingleSymbolMode><Scale><Frequency>Daily</Frequency><Interval>1</Interval><FilterPrePost>false</FilterPrePost></Scale><DataRange><DataRangeType>RecentYears</DataRangeType><RecentValue>10</RecentValue><StartDate>0001-01-01T00:00:00</StartDate><EndDate>0001-01-01T00:00:00</EndDate></DataRange><PositionSize><PositionSizeType>PctOfEquity</PositionSizeType><Amount>10</Amount><PositionSizerName /><PositionSizerParameters /><StartingCapital>100000</StartingCapital><MarginFactor>1</MarginFactor><MaxOpenPositions>0</MaxOpenPositions><MaxOpenPositionsLong>0</MaxOpenPositionsLong><MaxOpenPositionsShort>0</MaxOpenPositionsShort><MaxOpenPositionsInSymbol>0</MaxOpenPositionsInSymbol><UseNextBarOpenAsBasisPrice>false</UseNextBarOpenAsBasisPrice><StartingCapOptValues><MinValue>50000</MinValue><MaxValue>200000</MaxValue><StepValue>10000</StepValue></StartingCapOptValues><FixedAmountOptValues><MinValue>1000</MinValue><MaxValue>10000</MaxValue><StepValue>1000</StepValue></FixedAmountOptValues><PctEquityOptValues><MinValue>1</MinValue><MaxValue>20</MaxValue><StepValue>1</StepValue></PctEquityOptValues><FixedQtyOptValues><MinValue>100</MinValue><MaxValue>1000</MaxValue><StepValue>100</StepValue></FixedQtyOptValues><MarginOptValues><MinValue>1</MinValue><MaxValue>2</MaxValue><StepValue>0.1</StepValue></MarginOptValues><StartingCapOpt>false</StartingCapOpt><AmountOpt>false</AmountOpt><MarginOpt>false</MarginOpt></PositionSize><Benchmark>SPY</Benchmark><SingleSymbol>SPY</SingleSymbol><RunWithWFOParameters>false</RunWithWFOParameters><RunWithPreferredValues>false</RunWithPreferredValues><RetainNSF>true</RetainNSF><GranularLimitStopScale><Frequency>Daily</Frequency><Interval>1</Interval><FilterPrePost>true</FilterPrePost></GranularLimitStopScale><UpdateGranularData>true</UpdateGranularData><WLComDownlad>false</WLComDownlad><MarkedReadOnly>false</MarkedReadOnly><IsRunningInEvolver>false</IsRunningInEvolver><CouldOptimize>true</CouldOptimize><IsLinkedToExternalFile>false</IsLinkedToExternalFile><LinkedFileName /><CompiledStrategyTypeName /></Strategy>
